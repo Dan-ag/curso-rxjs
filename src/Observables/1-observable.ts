@@ -17,7 +17,6 @@ const obs$ = new Observable<string>( susbs => {
   // const a = undefined;
   // a.nombre = 'x'
 
-
   susbs.complete();
   susbs.next('hola')
 

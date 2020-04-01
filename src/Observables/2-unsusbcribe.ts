@@ -1,5 +1,6 @@
 import { Observable, Subscriber, Observer } from 'rxjs';
 
+
 const observer: Observer<any> = {
   next: value => console.log( 'siguiente [ next ]:', value ),
   error: error => console.warn( 'error [obs]:', error ),
@@ -8,6 +9,7 @@ const observer: Observer<any> = {
 
 const intervalos$ = new Observable<number>( suscriber => {
   let count = 0;
+  
   
   suscriber.next( count );
   const interval =  setInterval( () => {
@@ -35,8 +37,11 @@ const sub3 = intervalos$.subscribe( observer );
 sub1.add( sub2 )
     .add( sub3 ); 
 
+
 setTimeout( () => {
   sub1.unsubscribe();
+  // sub2.unsubscribe();
+  // sub3.unsubscribe();
 
   console.log('Completado timeout..');
 }, 6000)
