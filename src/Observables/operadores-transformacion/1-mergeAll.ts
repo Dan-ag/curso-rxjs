@@ -1,7 +1,7 @@
 import { fromEvent, Observable } from 'rxjs';
 import { debounce, debounceTime, map, pluck, mergeAll } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
-import { GithubUsersResponse, GithubUser } from './Observables/interfaces/GithubUser';
+import { GithubUsersResponse, GithubUser } from '../interfaces/GithubUser';
 
 const body = document.querySelector('body')
 const textInput = document.createElement('input')
