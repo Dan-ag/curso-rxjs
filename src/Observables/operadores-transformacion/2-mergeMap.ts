@@ -2,9 +2,6 @@ import { mergeMap, take, map, mergeMapTo, takeUntil } from 'rxjs/operators';
 import { interval, of, Observable, fromEvent } from 'rxjs';
 
 
-
-
-
 const letras$ = of<string>( 'a', 'b', 'c' );
 
 
