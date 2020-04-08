@@ -1,5 +1,5 @@
 import { ajax } from 'rxjs/ajax';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap, concatMap, mergeAll, sampleTime } from 'rxjs/operators';
 import { zip, of } from 'rxjs';
 
 /**
@@ -39,27 +39,73 @@ import { zip, of } from 'rxjs';
 */
 
 
-(() =>{
+( () => {
 
     // No tocar ========================================================
-    const SW_API = 'https://swapi.co/api';                     
-    const getRequest = ( url: string ) => ajax.getJSON<any>(url);
+    const SW_API = 'https://swapi.co/api';
+    const getRequest = ( url: string ) => ajax.getJSON<any>( url );
     // ==================================================================
 
     // Realizar el llamado al URL para obtener a Luke Skywalker
-    getRequest(`Aquí va un URL`).pipe(
+    getRequest( `${ SW_API }/people/1/` ).pipe(
         // Realizar los operadores respectivos aquí
-        
+        switchMap( resp => zip(
+            of( resp ),
+            getRequest( resp.species[ 0 ] ) )
+        ),
+        map( ( [ personaje, especie ] ) => ( { especie, personaje } ) )
+        // tap(console.log),
+        // map( resp => {
+        //   const resp2 = getRequest( resp.species[ 0 ] )
+        //   resp2.subscribe( console.log )
+        //   return resp2
+        // } )
 
-
-        
-
-    // NO TOCAR el subscribe ni modificarlo ==
-    ).subscribe( console.log )           // ==
+        // NO TOCAR el subscribe ni modificarlo ==
+    )
+        .subscribe( console.log );           // ==
     // =======================================
 
+    // input$.pipe(
+    //   debounceTime<KeyboardEvent>( 500 ),
+    //   pluck<KeyboardEvent, string>( 'target', 'value' ),
+    //   map<string, Observable<GithubUsersResponse>>( text => ajax.getJSON( `https://api.github.com/search/users?q=${ text }` ) ),
+    //   mergeAll<GithubUsersResponse>(),
+    //   pluck<GithubUsersResponse, GithubUser[]>( 'items' )
+    // ).subscribe( mostrerUsuarios );
 
+    // const test$ = zip(
+    //   luke$,
+    //   luke$.pipe(
+    //     map( resp => getRequest( resp.species[ 0 ] ) ),
+    //     mergeAll()
+    //   ) 
+    //   // of(  )
+    //   // getRequest( `${ SW_API }/people/1/` ),
+    //   // tap(console.log),
+    //   // mergeAll( () => {
+    //   //   const species$ = luke$.pipe(
+    //   //     map( resp => getRequest( resp.species[0] ) )
+    //   //   )
+    //   //   return species$;
+    //   // })
 
-})();
+    //   // concatMap(
+    //   //   luke$,
+    //   //   of(tap(console.log))
+    //   // ),
+    //   // of({}).pipe(tap(console.log))
 
-		
+    //   // // map<any, any>( resp => {
+    //   // //   console.log(resp);
+    //   // //   return of({})
+    //   // //   luke$.subscribe(   )
+    //   // // } )
+    // )
+
+    // test$.subscribe( ( [ personaje, especie ] ) => {
+    //   console.log('Especie:', especie);
+    //   console.log('Personaje:', personaje);
+    // } )
+} )();
+
