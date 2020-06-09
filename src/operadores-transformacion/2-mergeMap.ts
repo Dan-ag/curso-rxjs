@@ -1,9 +1,7 @@
 import { mergeMap, take, map, mergeMapTo, takeUntil } from 'rxjs/operators';
 import { interval, of, Observable, fromEvent } from 'rxjs';
-
-
+https://dev.to/angular/ain-t-nobody-needs-hostlistener-fg4
 const letras$ = of<string>( 'a', 'b', 'c' );
-
 
 letras$.pipe(
   mergeMap( letra => interval( 1000 ).pipe(

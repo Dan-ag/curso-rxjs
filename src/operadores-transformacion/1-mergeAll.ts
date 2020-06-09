@@ -24,24 +24,16 @@ const mostrerUsuarios = ( usuarios: GithubUser[] ) => {
     anchor.text = 'ver página';
     anchor.target = '_blank';
 
-
     li.append( img );
     li.append( usuario.login + ' ' );
     li.append( anchor );
 
     orderList.append( li )
   }
-
-
-
 }
-
-
 
 // Streams
 const input$ = fromEvent<KeyboardEvent>( textInput, 'keyup' );
-
-
 
 // input$.pipe(
 //   debounceTime( 500 ),
